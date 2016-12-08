@@ -44,7 +44,7 @@
           <descriptors>
             <descriptor>assembly/jar.xml</descriptor>
           </descriptors>
-          <finalName>hive-examples</finalName>
+          <finalName>ttudf</finalName>
           <outputDirectory>${project.build.directory}</outputDirectory>
           <appendAssemblyId>false</appendAssemblyId>
         </configuration>
