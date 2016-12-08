@@ -30,6 +30,9 @@ public class Strip extends UDF {
     if(null != contentid)
     	builder.append("3:" + contentid + " ");
     
+    
+    result.set(builder.toString());
+    
     return result;
   }
   
