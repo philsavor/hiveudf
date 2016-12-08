@@ -12,6 +12,7 @@ public class Strip extends UDF {
       return null;
     }
     result.set(StringUtils.strip(str.toString()));
+    result.set("test Result!!!");
     return result;
   }
   
