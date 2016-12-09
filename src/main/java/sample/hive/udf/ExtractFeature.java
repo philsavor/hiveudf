@@ -191,6 +191,7 @@ public class ExtractFeature extends UDF {
     /*
      *	setup features' sequence
      */
+    builder.append("(" + action + "|"+ stime+ "|" +p1 + "|" + ua_model+ "|" + net_work+ ")"); 
     builder.append(cls + " "); 
     builder.append(MessageFormat.format(FEATURE_STRING_FORMAT, f_stime_0_6_seq, f_stime_0_6) + " ");
 	builder.append(MessageFormat.format(FEATURE_STRING_FORMAT, f_stime_6_9_seq, f_stime_6_9) + " ");
