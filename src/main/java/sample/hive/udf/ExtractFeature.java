@@ -1,5 +1,6 @@
 package sample.hive.udf;
 
+import java.text.MessageFormat;
 import java.util.Calendar;
 
 import org.apache.hadoop.hive.ql.exec.UDF;
@@ -8,7 +9,35 @@ import org.apache.hadoop.io.Text;
 public class ExtractFeature extends UDF {
   private Text result = new Text();
   
-  private String f_stime_0_6,f_stime_6_9,f_stime_9_12,f_stime_12_15,f_stime_15_18,f_stime_18_23,f_stime_other;
+  private final String DATA_P1_IPHONE = "2_22_235";
+  private final String DATA_P1_ANDROID = "2_22_236";
+  private final String DATA_NETWORK_1 = "1";
+  private final String DATA_NETWORK_2 = "2";
+  private final String DATA_NETWORK_3 = "3";
+  private final String DATA_NETWORK_4 = "4";
+  
+  //format
+  private final String FEATURE_STRING_FORMAT = "{0}:{1}";
+  
+  //cls
+  private String cls;
+  //stime
+  private String f_stime_0_6,f_stime_0_6_seq = "0";
+  private String f_stime_6_9,f_stime_6_9_seq = "1";
+  private String f_stime_9_12,f_stime_9_12_seq = "2";
+  private String f_stime_12_15,f_stime_12_15_seq = "3";
+  private String f_stime_15_18,f_stime_15_18_seq = "4";
+  private String f_stime_18_23,f_stime_18_23_seq = "5";
+  private String f_stime_other,f_stime_other_seq = "6";
+  //p1
+  private String f_p1_iphone,f_p1_iphone_seq = "7";
+  private String f_p1_android,f_p1_android_seq = "8";
+  //net_work
+  private String f_net_work_1,f_net_work_1_seq = "9";
+  private String f_net_work_2,f_net_work_2_seq = "10";
+  private String f_net_work_3,f_net_work_3_seq = "11";
+  private String f_net_work_4,f_net_work_4_seq = "12";
+  private String f_net_work_other,f_net_work_other_seq = "13";
   
   public Text evaluate( Text action
 		  				,Text stime
@@ -20,8 +49,9 @@ public class ExtractFeature extends UDF {
 
     //action (reveal,content)
     if(null != action){
-    	builder.append("1 " + action + "    ");
-    }
+    	cls = "1";
+    }else
+    	cls = "0";
     
     //type: stime (1262307115161)
     if(null != stime){
@@ -94,35 +124,91 @@ public class ExtractFeature extends UDF {
 				f_stime_other = "1";
 				break;
 		}
-
-    	builder.append("f_stime_0_6:" + f_stime_0_6 + " ");
-    	builder.append("f_stime_6_9:" + f_stime_6_9 + " ");
-    	builder.append("f_stime_9_12:" + f_stime_9_12 + " ");
-    	builder.append("f_stime_12_15:" + f_stime_12_15 + " ");
-    	builder.append("f_stime_15_18:" + f_stime_15_18 + " ");
-    	builder.append("f_stime_18_23:" + f_stime_18_23 + " ");
-    	builder.append("f_stime_other:" + f_stime_other + " ");
+    }else{
+		f_stime_0_6 = "0";
+		f_stime_6_9 = "0";
+		f_stime_9_12 = "0";
+		f_stime_12_15 = "0";
+		f_stime_15_18 = "0";
+		f_stime_18_23 = "0";
+		f_stime_other = "1";
     }
     
     //f1: iphone
-    if("2_22_235".equals(p1))
-    	builder.append("1:1 ");
+    if(DATA_P1_IPHONE.equals(p1))
+    	f_p1_iphone = "1";
     else
-    	builder.append("1:0 ");
+    	f_p1_iphone = "0";
     
     
     //f2: android
-    if("2_22_236".equals(p1))
-    	builder.append("2:1 ");
+    if(DATA_P1_ANDROID.equals(p1))
+    	f_p1_android = "1";
     else
-    	builder.append("2:0 ");
+    	f_p1_android = "0";
     
-    //f3: contentid
-    if(null != ua_model)
-    	builder.append("3:" + ua_model + " ");
     
-    if(null != net_work)
-    	builder.append("4:" + net_work + " ");
+    if(null != net_work){
+    	if(DATA_NETWORK_1.equals(net_work)){
+    		f_net_work_1 = "1";
+    		f_net_work_2 = "0";
+    		f_net_work_3 = "0";
+    		f_net_work_4 = "0";
+    		f_net_work_other = "0";
+    	}else if(DATA_NETWORK_2.equals(net_work)){
+    		f_net_work_1 = "0";
+    		f_net_work_2 = "1";
+    		f_net_work_3 = "0";
+    		f_net_work_4 = "0";
+    		f_net_work_other = "0";
+    	}else if(DATA_NETWORK_3.equals(net_work)){
+    		f_net_work_1 = "0";
+    		f_net_work_2 = "0";
+    		f_net_work_3 = "1";
+    		f_net_work_4 = "0";
+    		f_net_work_other = "0";
+    	}else if(DATA_NETWORK_4.equals(net_work)){
+    		f_net_work_1 = "0";
+    		f_net_work_2 = "0";
+    		f_net_work_3 = "0";
+    		f_net_work_4 = "1";
+    		f_net_work_other = "0";
+    	}else{
+    		f_net_work_1 = "0";
+    		f_net_work_2 = "0";
+    		f_net_work_3 = "0";
+    		f_net_work_4 = "0";
+    		f_net_work_other = "1";
+    	}
+    }else{
+		f_net_work_1 = "0";
+		f_net_work_2 = "0";
+		f_net_work_3 = "0";
+		f_net_work_4 = "0";
+		f_net_work_other = "0";
+    }
+    
+    /*
+     *	setup features' sequence
+     */
+    builder.append(cls + " "); 
+    builder.append(MessageFormat.format(FEATURE_STRING_FORMAT, f_stime_0_6_seq, f_stime_0_6) + " ");
+	builder.append(MessageFormat.format(FEATURE_STRING_FORMAT, f_stime_6_9_seq, f_stime_6_9) + " ");
+	builder.append(MessageFormat.format(FEATURE_STRING_FORMAT, f_stime_9_12_seq, f_stime_9_12) + " ");
+	builder.append(MessageFormat.format(FEATURE_STRING_FORMAT, f_stime_12_15_seq, f_stime_12_15) + " ");
+	builder.append(MessageFormat.format(FEATURE_STRING_FORMAT, f_stime_15_18_seq, f_stime_15_18) + " ");
+	builder.append(MessageFormat.format(FEATURE_STRING_FORMAT, f_stime_18_23_seq, f_stime_18_23) + " ");
+	builder.append(MessageFormat.format(FEATURE_STRING_FORMAT, f_stime_other_seq, f_stime_other) + " ");
+	builder.append(MessageFormat.format(FEATURE_STRING_FORMAT, f_p1_iphone_seq, f_p1_iphone) + " ");
+	builder.append(MessageFormat.format(FEATURE_STRING_FORMAT, f_p1_android_seq, f_p1_android) + " ");
+	builder.append(MessageFormat.format(FEATURE_STRING_FORMAT, f_net_work_1_seq, f_net_work_1) + " ");
+	builder.append(MessageFormat.format(FEATURE_STRING_FORMAT, f_net_work_2_seq, f_net_work_2) + " ");
+	builder.append(MessageFormat.format(FEATURE_STRING_FORMAT, f_net_work_3_seq, f_net_work_3) + " ");
+	builder.append(MessageFormat.format(FEATURE_STRING_FORMAT, f_net_work_4_seq, f_net_work_4) + " ");
+	builder.append(MessageFormat.format(FEATURE_STRING_FORMAT, f_net_work_other_seq, f_net_work_other));
+    /*
+     *	setup features' sequence
+     */
     
     result.set(builder.toString());
     
