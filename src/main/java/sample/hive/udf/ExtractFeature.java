@@ -11,10 +11,22 @@ public class ExtractFeature extends UDF {
   
   private final String DATA_P1_IPHONE = "2_22_235";
   private final String DATA_P1_ANDROID = "2_22_236";
-  private final String DATA_NETWORK_1 = "1";
-  private final String DATA_NETWORK_2 = "2";
-  private final String DATA_NETWORK_3 = "3";
-  private final String DATA_NETWORK_4 = "4";
+  private final String DATA_NETWORK_NONETWORK_ANDROID = "-1";
+  private final String DATA_NETWORK_NONETWORK = "0";
+  private final String DATA_NETWORK_WIFI = "1";
+  private final String DATA_NETWORK_GPRS = "2";
+  private final String DATA_NETWORK_EDGE = "3";
+  private final String DATA_NETWORK_UMTS = "4";
+  private final String DATA_NETWORK_HSDPA = "5";
+  private final String DATA_NETWORK_HSUPA = "6";
+  private final String DATA_NETWORK_HSPA = "7";
+  private final String DATA_NETWORK_CDMA = "8";
+  private final String DATA_NETWORK_EVDO_0 = "9";
+  private final String DATA_NETWORK_EVDO_A = "10";
+  private final String DATA_NETWORK_1XRTT = "11";
+  private final String DATA_NETWORK_HSPAP = "12";
+  private final String DATA_NETWORK_ETHERNET = "13";
+  private final String DATA_NETWORK_LTE = "14";
   
   //format
   private final String FEATURE_STRING_FORMAT = "{0}:{1}";
@@ -33,10 +45,10 @@ public class ExtractFeature extends UDF {
   private String f_p1_iphone,f_p1_iphone_seq = "7";
   private String f_p1_android,f_p1_android_seq = "8";
   //net_work
-  private String f_net_work_1,f_net_work_1_seq = "9";
-  private String f_net_work_2,f_net_work_2_seq = "10";
-  private String f_net_work_3,f_net_work_3_seq = "11";
-  private String f_net_work_4,f_net_work_4_seq = "12";
+  private String f_net_work_4g,f_net_work_4g_seq = "9";
+  private String f_net_work_3g,f_net_work_3g_seq = "10";
+  private String f_net_work_2g,f_net_work_2g_seq = "11";
+  private String f_net_work_wifi,f_net_work_wifi_seq = "12";
   private String f_net_work_other,f_net_work_other_seq = "13";
   
   public Text evaluate( Text action
@@ -47,13 +59,23 @@ public class ExtractFeature extends UDF {
     
     StringBuilder builder = new StringBuilder();
 
-    //action (reveal,content)
+    /*
+     * cls
+     */
     if(null != action){
     	cls = "1";
     }else
     	cls = "0";
     
-    //type: stime (1262307115161)
+    /*
+     * f_stime_0_6
+     * f_stime_6_9
+     * f_stime_9_12
+     * f_stime_12_15
+     * f_stime_15_18
+     * f_stime_18_23
+     * f_stime_other
+     */
     if(null != stime){
 		Long timestamp = Long.parseLong(stime.toString());
 		Calendar calendar = Calendar.getInstance();
@@ -134,7 +156,9 @@ public class ExtractFeature extends UDF {
 		f_stime_other = "1";
     }
     
-    //f1: iphone
+    /*
+     * f_p1_iphone
+     */
     String p1String = p1.toString();
     
     if(DATA_P1_IPHONE.equals(p1String))
@@ -143,58 +167,89 @@ public class ExtractFeature extends UDF {
     	f_p1_iphone = "0";
     
     
-    //f2: android
+    /*
+     * f_p1_android
+     */
     if(DATA_P1_ANDROID.equals(p1String))
     	f_p1_android = "1";
     else
     	f_p1_android = "0";
     
-    
+    /*
+     * f_net_work_4g
+     * f_net_work_3g
+     * f_net_work_2g
+     * f_net_work_wifi
+     * f_net_work_other
+     */
     if(null != net_work){
-    	String netWorkString = net_work.toString();
-    	if(DATA_NETWORK_1.equals(netWorkString)){
-    		f_net_work_1 = "1";
-    		f_net_work_2 = "0";
-    		f_net_work_3 = "0";
-    		f_net_work_4 = "0";
-    		f_net_work_other = "0";
-    	}else if(DATA_NETWORK_2.equals(netWorkString)){
-    		f_net_work_1 = "0";
-    		f_net_work_2 = "1";
-    		f_net_work_3 = "0";
-    		f_net_work_4 = "0";
-    		f_net_work_other = "0";
-    	}else if(DATA_NETWORK_3.equals(netWorkString)){
-    		f_net_work_1 = "0";
-    		f_net_work_2 = "0";
-    		f_net_work_3 = "1";
-    		f_net_work_4 = "0";
-    		f_net_work_other = "0";
-    	}else if(DATA_NETWORK_4.equals(netWorkString)){
-    		f_net_work_1 = "0";
-    		f_net_work_2 = "0";
-    		f_net_work_3 = "0";
-    		f_net_work_4 = "1";
-    		f_net_work_other = "0";
-    	}else{
-    		f_net_work_1 = "0";
-    		f_net_work_2 = "0";
-    		f_net_work_3 = "0";
-    		f_net_work_4 = "0";
-    		f_net_work_other = "1";
-    	}
-    }else{
-		f_net_work_1 = "0";
-		f_net_work_2 = "0";
-		f_net_work_3 = "0";
-		f_net_work_4 = "0";
-		f_net_work_other = "0";
+		String netWorkString = net_work.toString();
+		switch(netWorkString){
+			case DATA_NETWORK_LTE:
+				f_net_work_4g = "1";
+				f_net_work_3g = "0";
+				f_net_work_2g = "0";
+				f_net_work_wifi = "0";
+				f_net_work_other = "0";
+				break;
+			case DATA_NETWORK_UMTS:
+			case DATA_NETWORK_HSDPA:
+			case DATA_NETWORK_HSUPA:
+			case DATA_NETWORK_HSPA:
+			case DATA_NETWORK_CDMA:
+			case DATA_NETWORK_EVDO_0:
+			case DATA_NETWORK_EVDO_A:
+			case DATA_NETWORK_HSPAP:
+				f_net_work_4g = "0";
+				f_net_work_3g = "1";
+				f_net_work_2g = "0";
+				f_net_work_wifi = "0";
+				f_net_work_other = "0";
+				break;
+			case DATA_NETWORK_GPRS:
+			case DATA_NETWORK_EDGE:
+			case DATA_NETWORK_1XRTT:
+				f_net_work_4g = "0";
+				f_net_work_3g = "0";
+				f_net_work_2g = "1";
+				f_net_work_wifi = "0";
+				f_net_work_other = "0";
+				break;
+			case DATA_NETWORK_WIFI:
+			case DATA_NETWORK_ETHERNET:
+				f_net_work_4g = "0";
+				f_net_work_3g = "0";
+				f_net_work_2g = "0";
+				f_net_work_wifi = "1";
+				f_net_work_other = "0";
+				break;
+			case DATA_NETWORK_NONETWORK_ANDROID:
+			case DATA_NETWORK_NONETWORK:
+				f_net_work_4g = "0";
+				f_net_work_3g = "0";
+				f_net_work_2g = "0";
+				f_net_work_wifi = "0";
+				f_net_work_other = "1";
+				break;
+			default:
+				f_net_work_4g = "0";
+				f_net_work_3g = "0";
+				f_net_work_2g = "0";
+				f_net_work_wifi = "0";
+				f_net_work_other = "1";
+				break;
+		}
+	}else{
+		f_net_work_4g = "0";
+		f_net_work_3g = "0";
+		f_net_work_2g = "0";
+		f_net_work_wifi = "0";
+		f_net_work_other = "1";
     }
     
     /*
      *	setup features' sequence
      */
-    builder.append("(" + action + "|"+ stime+ "|" +p1 + "|" + ua_model+ "|" + net_work+ ")"); 
     builder.append(cls + " "); 
     builder.append(MessageFormat.format(FEATURE_STRING_FORMAT, f_stime_0_6_seq, f_stime_0_6) + " ");
 	builder.append(MessageFormat.format(FEATURE_STRING_FORMAT, f_stime_6_9_seq, f_stime_6_9) + " ");
@@ -205,10 +260,10 @@ public class ExtractFeature extends UDF {
 	builder.append(MessageFormat.format(FEATURE_STRING_FORMAT, f_stime_other_seq, f_stime_other) + " ");
 	builder.append(MessageFormat.format(FEATURE_STRING_FORMAT, f_p1_iphone_seq, f_p1_iphone) + " ");
 	builder.append(MessageFormat.format(FEATURE_STRING_FORMAT, f_p1_android_seq, f_p1_android) + " ");
-	builder.append(MessageFormat.format(FEATURE_STRING_FORMAT, f_net_work_1_seq, f_net_work_1) + " ");
-	builder.append(MessageFormat.format(FEATURE_STRING_FORMAT, f_net_work_2_seq, f_net_work_2) + " ");
-	builder.append(MessageFormat.format(FEATURE_STRING_FORMAT, f_net_work_3_seq, f_net_work_3) + " ");
-	builder.append(MessageFormat.format(FEATURE_STRING_FORMAT, f_net_work_4_seq, f_net_work_4) + " ");
+	builder.append(MessageFormat.format(FEATURE_STRING_FORMAT, f_net_work_4g_seq, f_net_work_4g) + " ");
+	builder.append(MessageFormat.format(FEATURE_STRING_FORMAT, f_net_work_3g_seq, f_net_work_3g) + " ");
+	builder.append(MessageFormat.format(FEATURE_STRING_FORMAT, f_net_work_2g_seq, f_net_work_2g) + " ");
+	builder.append(MessageFormat.format(FEATURE_STRING_FORMAT, f_net_work_wifi_seq, f_net_work_wifi) + " ");
 	builder.append(MessageFormat.format(FEATURE_STRING_FORMAT, f_net_work_other_seq, f_net_work_other));
     /*
      *	setup features' sequence
