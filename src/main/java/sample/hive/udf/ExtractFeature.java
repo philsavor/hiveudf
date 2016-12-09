@@ -135,39 +135,42 @@ public class ExtractFeature extends UDF {
     }
     
     //f1: iphone
-    if(DATA_P1_IPHONE.equals(p1))
+    String p1String = p1.toString();
+    
+    if(DATA_P1_IPHONE.equals(p1String))
     	f_p1_iphone = "1";
     else
     	f_p1_iphone = "0";
     
     
     //f2: android
-    if(DATA_P1_ANDROID.equals(p1))
+    if(DATA_P1_ANDROID.equals(p1String))
     	f_p1_android = "1";
     else
     	f_p1_android = "0";
     
     
     if(null != net_work){
-    	if(DATA_NETWORK_1.equals(net_work)){
+    	String netWorkString = net_work.toString();
+    	if(DATA_NETWORK_1.equals(netWorkString)){
     		f_net_work_1 = "1";
     		f_net_work_2 = "0";
     		f_net_work_3 = "0";
     		f_net_work_4 = "0";
     		f_net_work_other = "0";
-    	}else if(DATA_NETWORK_2.equals(net_work)){
+    	}else if(DATA_NETWORK_2.equals(netWorkString)){
     		f_net_work_1 = "0";
     		f_net_work_2 = "1";
     		f_net_work_3 = "0";
     		f_net_work_4 = "0";
     		f_net_work_other = "0";
-    	}else if(DATA_NETWORK_3.equals(net_work)){
+    	}else if(DATA_NETWORK_3.equals(netWorkString)){
     		f_net_work_1 = "0";
     		f_net_work_2 = "0";
     		f_net_work_3 = "1";
     		f_net_work_4 = "0";
     		f_net_work_other = "0";
-    	}else if(DATA_NETWORK_4.equals(net_work)){
+    	}else if(DATA_NETWORK_4.equals(netWorkString)){
     		f_net_work_1 = "0";
     		f_net_work_2 = "0";
     		f_net_work_3 = "0";
