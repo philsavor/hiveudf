@@ -36,14 +36,18 @@ public class ExtractFeature extends UDF {
 	private Feature fNDays1To2 = new Feature(15);
 	private Feature fNDays3To4 = new Feature(16);
 	private Feature fNDays5More = new Feature(17);
-	
+	//tm
+	private Feature fTM20Less = new Feature(18);
+	private Feature fTM20To40 = new Feature(19);
+	private Feature fTM40More = new Feature(20);
 
 	public Text evaluate( Text action
 						,Text stime
 						,Text p1
 						,Text ua_model
 						,Text net_work
-						,Integer ndays) {
+						,Integer ndays
+						,Integer tm) {
 
 		StringBuilder builder = new StringBuilder();
 
@@ -293,7 +297,33 @@ public class ExtractFeature extends UDF {
 			fNDays3To4.setValue("0");
 			fNDays5More.setValue("0");	
 		}
-
+		
+		/*
+		 * fTM20Less
+		 * fTM20To40
+		 * fTM40More
+		 */
+		if(null != tm){
+			double mins = tm / (60 * 7);
+			if(mins < 20){
+				fTM20Less.setValue("1");
+				fTM20To40.setValue("0");
+				fTM40More.setValue("0");
+			}else if(mins >= 20 && mins <= 40){
+				fTM20Less.setValue("0");
+				fTM20To40.setValue("1");
+				fTM40More.setValue("0");
+			}else if(mins > 40){
+				fTM20Less.setValue("0");
+				fTM20To40.setValue("0");
+				fTM40More.setValue("1");
+			}
+		}else{
+			fTM20Less.setValue("1");
+			fTM20To40.setValue("0");
+			fTM40More.setValue("0");
+		}
+		
 		/*
 		 *	setup features' order
 		 */
@@ -316,6 +346,9 @@ public class ExtractFeature extends UDF {
 		featureList.add(fNDays1To2);
 		featureList.add(fNDays3To4);
 		featureList.add(fNDays5More);
+		featureList.add(fTM20Less);
+		featureList.add(fTM20To40);
+		featureList.add(fTM40More);
 		Collections.sort(featureList);
 
 		builder.append(cls + " "); 
