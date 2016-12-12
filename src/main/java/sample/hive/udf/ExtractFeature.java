@@ -16,15 +16,15 @@ public class ExtractFeature extends UDF {
   private String cls;
   //stime
   private Feature fStime0To6 = new Feature(0);
-  private Feature fStime6To9 = new Feature(1);
-  private Feature fStime9To12 = new Feature(2);
+  private Feature fStime6To9 = new Feature(2);
+  private Feature fStime9To12 = new Feature(1);
   private Feature fStime12To15 = new Feature(3);
   private Feature fStime15To18 = new Feature(4);
   private Feature fStime18To23 = new Feature(5);
   private Feature fStimeOther = new Feature(6);
   //p1
-  private Feature fP1IPhone = new Feature(7);
-  private Feature fP1Android = new Feature(8);
+  private Feature fP1IPhone = new Feature(8);
+  private Feature fP1Android = new Feature(7);
   //net_work
   private Feature fNetwork4g = new Feature(9);
   private Feature fNetwork3g = new Feature(10);
