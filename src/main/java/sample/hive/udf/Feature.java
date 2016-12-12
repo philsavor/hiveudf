@@ -42,7 +42,7 @@ public class Feature implements Comparable<Feature>{
 		if(this.getIndex() == o.getIndex())
 			return 0;
 		else
-			return new Long(o.getIndex() - this.getIndex()).intValue();
+			return new Long( this.getIndex() - o.getIndex() ).intValue();
 	}
 
 }
