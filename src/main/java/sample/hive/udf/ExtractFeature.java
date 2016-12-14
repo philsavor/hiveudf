@@ -44,6 +44,10 @@ public class ExtractFeature extends UDF {
 	private Feature fPicNum1More = new Feature(21);
 	//is_video
 	private Feature fIsVideo = new Feature(22);
+	//text_length
+	private Feature fTextLengthLong = new Feature(23);
+	//pic_num,is_video,text_length,video_duration
+	private Feature fQuality = new Feature(24);
 
 	public Text evaluate( Text action
 						,Text stime
@@ -362,6 +366,29 @@ public class ExtractFeature extends UDF {
 		}else
 			fIsVideo.setValue("0");
 			
+		/*
+		 * fTextLengthLong
+		 */
+		if(text_length != null){
+			if(text_length > 1000)
+				fTextLengthLong.setValue("1");
+			else
+				fTextLengthLong.setValue("0");
+		}else
+			fTextLengthLong.setValue("0");
+		
+		/*
+		 * fQuality
+		 */
+		Long score = 0L;
+		//pic_num
+		if(pic_num != null && pic_num > 0){
+			if(pic_num > 0 && pic_num <= 4)
+				score += 10;
+			else
+				score += 20;
+		}
+		fQuality.setValue(score.toString());
 		
 		/*
 		 *	setup features' order
@@ -390,6 +417,8 @@ public class ExtractFeature extends UDF {
 		featureList.add(fTM40More);
 		featureList.add(fPicNum1More);
 		featureList.add(fIsVideo);
+		featureList.add(fTextLengthLong);
+		featureList.add(fQuality);
 		Collections.sort(featureList);
 
 		builder.append(cls + " "); 
