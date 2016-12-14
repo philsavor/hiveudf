@@ -27,6 +27,8 @@ public class ExtractFeatureConstant {
 	public static final String DATA_NETWORK_HSPAP = "12";
 	public static final String DATA_NETWORK_ETHERNET = "13";
 	public static final String DATA_NETWORK_LTE = "14";
+	public static final String DATA_ISVIDEO_TRUE = "true";
+	public static final String DATA_ISVIDEO_FALSE = "false";
 
 	//format
 	public static final String FEATURE_STRING_FORMAT = "{0}:{1}";

@@ -40,6 +40,10 @@ public class ExtractFeature extends UDF {
 	private Feature fTM20Less = new Feature(18);
 	private Feature fTM20To40 = new Feature(19);
 	private Feature fTM40More = new Feature(20);
+	//pic_num
+	private Feature fPicNum1More = new Feature(21);
+	//is_video
+	private Feature fIsVideo = new Feature(22);
 
 	public Text evaluate( Text action
 						,Text stime
@@ -47,7 +51,11 @@ public class ExtractFeature extends UDF {
 						,Text ua_model
 						,Text net_work
 						,Integer ndays
-						,Integer tm) {
+						,Integer tm
+						,Integer pic_num
+						,Text is_video
+						,Long	text_length
+						,Long	video_duration) {
 
 		StringBuilder builder = new StringBuilder();
 
@@ -313,7 +321,7 @@ public class ExtractFeature extends UDF {
 				fTM20Less.setValue("0");
 				fTM20To40.setValue("1");
 				fTM40More.setValue("0");
-			}else if(mins > 40){
+			}else{
 				fTM20Less.setValue("0");
 				fTM20To40.setValue("0");
 				fTM40More.setValue("1");
@@ -323,6 +331,37 @@ public class ExtractFeature extends UDF {
 			fTM20To40.setValue("0");
 			fTM40More.setValue("0");
 		}
+		
+		/*
+		 * fPicNum1More
+		 */
+		if(pic_num != null){
+			if(pic_num > 0)
+				fPicNum1More.setValue("1");
+			else
+				fPicNum1More.setValue("0");
+		}else
+			fPicNum1More.setValue("0");
+		
+		/*
+		 * fIsVideo
+		 */
+		if(is_video != null){
+			String isVideoString = is_video.toString();
+			switch(isVideoString){
+				case ExtractFeatureConstant.DATA_ISVIDEO_TRUE:
+					fIsVideo.setValue("1");
+					break;
+				case ExtractFeatureConstant.DATA_ISVIDEO_FALSE:
+					fIsVideo.setValue("0");
+					break;
+				default:
+					fIsVideo.setValue("0");
+					break;
+			}
+		}else
+			fIsVideo.setValue("0");
+			
 		
 		/*
 		 *	setup features' order
@@ -349,6 +388,8 @@ public class ExtractFeature extends UDF {
 		featureList.add(fTM20Less);
 		featureList.add(fTM20To40);
 		featureList.add(fTM40More);
+		featureList.add(fPicNum1More);
+		featureList.add(fIsVideo);
 		Collections.sort(featureList);
 
 		builder.append(cls + " "); 
