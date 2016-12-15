@@ -1,9 +1,11 @@
 package sample.hive.udf;
 
 import java.text.MessageFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -57,6 +59,7 @@ public class ExtractFeature extends UDF {
 						,Text net_work
 						,Integer ndays
 						,Integer tm
+						,Text publishtime
 						,Integer pic_num
 						,Text is_video
 						,Long	text_length
@@ -442,6 +445,21 @@ public class ExtractFeature extends UDF {
 					score += 2;
 				else if (positiveCount >= 6)
 					score += 5;
+			}
+			//5.publishtime
+			if(null != publishtime){
+				Long pulishTimeStamp = Long.parseLong(publishtime.toString());
+				Long currentTimeStamp = new Date().getTime();
+				Long diff = currentTimeStamp - pulishTimeStamp;
+				long diffHours = diff / (60 * 60 * 1000);
+				double newScore = 0;
+				if(diffHours > 0){
+					newScore = score * (1 / Math.pow(2,Math.floor(diffHours*1.0/12)));
+					if(newScore < 0.1)
+						newScore = 0.1;
+				}
+				if(newScore > 0)
+					score = Math.round(newScore);
 			}
 			
 			fQuality.setValue(score.toString());
