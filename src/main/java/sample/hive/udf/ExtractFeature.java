@@ -98,74 +98,84 @@ public class ExtractFeature extends UDF {
 		 * fStimeOther
 		 */
 		if(null != stime){
-			Long timestamp = Long.parseLong(stime.toString());
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTimeInMillis(timestamp);
-			int hour = Calendar.HOUR;
-			switch(hour){
-				case 0: case 1: case 2: case 3: case 4: case 5: case 6:
-					fStime0To6.setValue("1");
-					fStime6To9.setValue("0");
-					fStime9To12.setValue("0");
-					fStime12To15.setValue("0");
-					fStime15To18.setValue("0");
-					fStime18To23.setValue("0");
-					fStimeOther.setValue("0");
-					break;
-				case 7: case 8: case 9: 
-					fStime0To6.setValue("0");
-					fStime6To9.setValue("1");
-					fStime9To12.setValue("0");
-					fStime12To15.setValue("0");
-					fStime15To18.setValue("0");
-					fStime18To23.setValue("0");
-					fStimeOther.setValue("0");
-					break;
-				case 10: case 11: case 12: 
-					fStime0To6.setValue("0");
-					fStime6To9.setValue("0");
-					fStime9To12.setValue("1");
-					fStime12To15.setValue("0");
-					fStime15To18.setValue("0");
-					fStime18To23.setValue("0");
-					fStimeOther.setValue("0");
-					break;
-				case 13: case 14: case 15: 
-					fStime0To6.setValue("0");
-					fStime6To9.setValue("0");
-					fStime9To12.setValue("0");
-					fStime12To15.setValue("1");
-					fStime15To18.setValue("0");
-					fStime18To23.setValue("0");
-					fStimeOther.setValue("0");
-					break;
-				case 16: case 17: case 18: 
-					fStime0To6.setValue("0");
-					fStime6To9.setValue("0");
-					fStime9To12.setValue("0");
-					fStime12To15.setValue("0");
-					fStime15To18.setValue("1");
-					fStime18To23.setValue("0");
-					fStimeOther.setValue("0");
-					break;
-				case 19: case 20: case 21: case 22: case 23:
-					fStime0To6.setValue("0");
-					fStime6To9.setValue("0");
-					fStime9To12.setValue("0");
-					fStime12To15.setValue("0");
-					fStime15To18.setValue("0");
-					fStime18To23.setValue("1");
-					fStimeOther.setValue("0");
-					break;
-				default:
-					fStime0To6.setValue("0");
-					fStime6To9.setValue("0");
-					fStime9To12.setValue("0");
-					fStime12To15.setValue("0");
-					fStime15To18.setValue("0");
-					fStime18To23.setValue("0");
-					fStimeOther.setValue("1");
-					break;
+			try{
+				Long timestamp = Long.parseLong(stime.toString());
+				Calendar calendar = Calendar.getInstance();
+				calendar.setTimeInMillis(timestamp);
+				int hour = Calendar.HOUR;
+				switch(hour){
+					case 0: case 1: case 2: case 3: case 4: case 5: case 6:
+						fStime0To6.setValue("1");
+						fStime6To9.setValue("0");
+						fStime9To12.setValue("0");
+						fStime12To15.setValue("0");
+						fStime15To18.setValue("0");
+						fStime18To23.setValue("0");
+						fStimeOther.setValue("0");
+						break;
+					case 7: case 8: case 9: 
+						fStime0To6.setValue("0");
+						fStime6To9.setValue("1");
+						fStime9To12.setValue("0");
+						fStime12To15.setValue("0");
+						fStime15To18.setValue("0");
+						fStime18To23.setValue("0");
+						fStimeOther.setValue("0");
+						break;
+					case 10: case 11: case 12: 
+						fStime0To6.setValue("0");
+						fStime6To9.setValue("0");
+						fStime9To12.setValue("1");
+						fStime12To15.setValue("0");
+						fStime15To18.setValue("0");
+						fStime18To23.setValue("0");
+						fStimeOther.setValue("0");
+						break;
+					case 13: case 14: case 15: 
+						fStime0To6.setValue("0");
+						fStime6To9.setValue("0");
+						fStime9To12.setValue("0");
+						fStime12To15.setValue("1");
+						fStime15To18.setValue("0");
+						fStime18To23.setValue("0");
+						fStimeOther.setValue("0");
+						break;
+					case 16: case 17: case 18: 
+						fStime0To6.setValue("0");
+						fStime6To9.setValue("0");
+						fStime9To12.setValue("0");
+						fStime12To15.setValue("0");
+						fStime15To18.setValue("1");
+						fStime18To23.setValue("0");
+						fStimeOther.setValue("0");
+						break;
+					case 19: case 20: case 21: case 22: case 23:
+						fStime0To6.setValue("0");
+						fStime6To9.setValue("0");
+						fStime9To12.setValue("0");
+						fStime12To15.setValue("0");
+						fStime15To18.setValue("0");
+						fStime18To23.setValue("1");
+						fStimeOther.setValue("0");
+						break;
+					default:
+						fStime0To6.setValue("0");
+						fStime6To9.setValue("0");
+						fStime9To12.setValue("0");
+						fStime12To15.setValue("0");
+						fStime15To18.setValue("0");
+						fStime18To23.setValue("0");
+						fStimeOther.setValue("1");
+						break;
+				}
+			}catch(Exception e){
+				fStime0To6.setValue("0");
+				fStime6To9.setValue("0");
+				fStime9To12.setValue("0");
+				fStime12To15.setValue("0");
+				fStime15To18.setValue("0");
+				fStime18To23.setValue("0");
+				fStimeOther.setValue("1");
 			}
 		}else{
 			fStime0To6.setValue("0");
@@ -181,16 +191,21 @@ public class ExtractFeature extends UDF {
 		 * fP1IPhone
 		 * fP1Android
 		 */
-		String p1String = p1.toString();
-		if(ExtractFeatureConstant.DATA_P1_IPHONE.equals(p1String))
-			fP1IPhone.setValue("1");
-		else
-			fP1IPhone.setValue("0");
+		if(null != p1){
+			String p1String = p1.toString();
+			if(ExtractFeatureConstant.DATA_P1_IPHONE.equals(p1String))
+				fP1IPhone.setValue("1");
+			else
+				fP1IPhone.setValue("0");
 
-		if(ExtractFeatureConstant.DATA_P1_ANDROID.equals(p1String))
-			fP1Android.setValue("1");
-		else
+			if(ExtractFeatureConstant.DATA_P1_ANDROID.equals(p1String))
+				fP1Android.setValue("1");
+			else
+				fP1Android.setValue("0");
+		}else{
+			fP1IPhone.setValue("0");
 			fP1Android.setValue("0");
+		}
 
 		/*
 		 * fNetwork4g
