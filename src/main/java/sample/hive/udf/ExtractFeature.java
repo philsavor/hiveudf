@@ -15,7 +15,7 @@ public class ExtractFeature extends UDF {
 	//cls
 	private String cls;
 	//stime
-	private Feature fStime0To6 = new Feature(0);
+	private Feature fStime0To6 = new Feature(25);
 	private Feature fStime6To9 = new Feature(1);
 	private Feature fStime9To12 = new Feature(2);
 	private Feature fStime12To15 = new Feature(3);
