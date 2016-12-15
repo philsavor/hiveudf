@@ -15,39 +15,39 @@ public class ExtractFeature extends UDF {
 	//cls
 	private String cls;
 	//stime
-	private Feature fStime0To6 = new Feature(25);
-	private Feature fStime6To9 = new Feature(1);
-	private Feature fStime9To12 = new Feature(2);
-	private Feature fStime12To15 = new Feature(3);
-	private Feature fStime15To18 = new Feature(4);
-	private Feature fStime18To23 = new Feature(5);
-	private Feature fStimeOther = new Feature(6);
+	private Feature fStime0To6 = new Feature(1);
+	private Feature fStime6To9 = new Feature(2);
+	private Feature fStime9To12 = new Feature(3);
+	private Feature fStime12To15 = new Feature(4);
+	private Feature fStime15To18 = new Feature(5);
+	private Feature fStime18To23 = new Feature(6);
+	private Feature fStimeOther = new Feature(7);
 	//p1
-	private Feature fP1IPhone = new Feature(7);
-	private Feature fP1Android = new Feature(8);
+	private Feature fP1IPhone = new Feature(8);
+	private Feature fP1Android = new Feature(9);
 	//net_work
-	private Feature fNetwork4g = new Feature(9);
-	private Feature fNetwork3g = new Feature(10);
-	private Feature fNetwork2g = new Feature(11);
-	private Feature fNetworkWifi = new Feature(12);
-	private Feature fNetworkOther = new Feature(13);
+	private Feature fNetwork4g = new Feature(10);
+	private Feature fNetwork3g = new Feature(11);
+	private Feature fNetwork2g = new Feature(12);
+	private Feature fNetworkWifi = new Feature(13);
+	private Feature fNetworkOther = new Feature(14);
 	//ndays
-	private Feature fNDays0 = new Feature(14);
-	private Feature fNDays1To2 = new Feature(15);
-	private Feature fNDays3To4 = new Feature(16);
-	private Feature fNDays5More = new Feature(17);
+	private Feature fNDays0 = new Feature(15);
+	private Feature fNDays1To2 = new Feature(16);
+	private Feature fNDays3To4 = new Feature(17);
+	private Feature fNDays5More = new Feature(18);
 	//tm
-	private Feature fTM20Less = new Feature(18);
-	private Feature fTM20To40 = new Feature(19);
-	private Feature fTM40More = new Feature(20);
+	private Feature fTM20Less = new Feature(19);
+	private Feature fTM20To40 = new Feature(20);
+	private Feature fTM40More = new Feature(21);
 	//pic_num
-	private Feature fPicNum1More = new Feature(21);
+	private Feature fPicNum1More = new Feature(22);
 	//is_video
-	private Feature fIsVideo = new Feature(22);
+	private Feature fIsVideo = new Feature(23);
 	//text_length
-	private Feature fTextLengthLong = new Feature(23);
+	private Feature fTextLengthLong = new Feature(24);
 	//pic_num,is_video,text_length,video_duration
-	private Feature fQuality = new Feature(24);
+	private Feature fQuality = new Feature(25);
 
 	public Text evaluate( Text action
 						,Text stime
