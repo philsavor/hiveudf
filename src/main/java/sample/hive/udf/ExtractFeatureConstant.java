@@ -31,6 +31,5 @@ public class ExtractFeatureConstant {
 	public static final String DATA_ISVIDEO_FALSE = "false";
 
 	//format
-	//public static final String FEATURE_STRING_FORMAT = "{0}:{1}";
-	public static final String FEATURE_STRING_FORMAT = "{1}";
+	public static final String FEATURE_STRING_FORMAT = "{0}:{1}";
 }
