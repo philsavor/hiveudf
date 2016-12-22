@@ -11,17 +11,17 @@ public class ExtractUserFeature extends UDF {
 	private Text result = new Text();
 
 	//ndays
-	private Feature fNDays0 = new Feature(15);
-	private Feature fNDays1To2 = new Feature(16);
-	private Feature fNDays3To4 = new Feature(17);
-	private Feature fNDays5More = new Feature(18);
+	private Feature fNDays0 = new Feature(1);
+	private Feature fNDays1To2 = new Feature(2);
+	private Feature fNDays3To4 = new Feature(3);
+	private Feature fNDays5More = new Feature(4);
 	//tm
-	private Feature fTM20Less = new Feature(19);
-	private Feature fTM20To40 = new Feature(20);
-	private Feature fTM40More = new Feature(21);
+	private Feature fTM20Less = new Feature(5);
+	private Feature fTM20To40 = new Feature(6);
+	private Feature fTM40More = new Feature(7);
 
 	public Text evaluate( Integer ndays
-						,Integer tm) {
+						,Long tm) {
 
 		StringBuilder builder = new StringBuilder();
 
