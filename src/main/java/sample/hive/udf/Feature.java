@@ -1,9 +1,17 @@
 package sample.hive.udf;
 
 public class Feature implements Comparable<Feature>{
+	private String key;
 	private String value;
-
 	private Long index;
+
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
+	}
 
 	public Feature(Long index) {
 		super();
@@ -15,10 +23,16 @@ public class Feature implements Comparable<Feature>{
 		this.index = new Long(index);
 	}
 	
-	public Feature(String value, Long index) {
+	public Feature(String key, Long index) {
 		super();
-		this.value = value;
+		this.key = key;
 		this.index = index;
+	}
+	
+	public Feature(String key, Integer index) {
+		super();
+		this.key = key;
+		this.index = new Long(index);
 	}
 
 	public String getValue() {
